@@ -16,7 +16,6 @@ public class ControllerFuncionario {
     @PostMapping("/adicionar")
     @ResponseStatus(HttpStatus.CREATED)
     public String cadastrarFuncionario(@RequestBody Funcionario funcionario) {
-        System.out.println(funcionario.getNome());
         this.listaFuncionario.add(funcionario);
         return "Funcionário criado com sucesso";
     }
@@ -29,6 +28,16 @@ public class ControllerFuncionario {
     @GetMapping("/consultar/{codigo}")
     public ResponseEntity<Funcionario> consultarFuncionario(@PathVariable("codigo") long codigo) {
         Funcionario funcionario = this.listaFuncionario.stream().filter(a -> a.getCodigo() == codigo).findFirst().get();
+        return new ResponseEntity<>(funcionario, HttpStatus.OK);
+    }
+
+    @PutMapping("/alterar/{codigo}")
+    public ResponseEntity<Funcionario> alterarFuncionario(@PathVariable("codigo") long codigo, @RequestBody Funcionario funcionario) {
+        this.listaFuncionario.stream().filter(a -> a.getCodigo() == codigo).forEach(a -> {
+            a.setNome(funcionario.getNome());
+            a.setCpf(funcionario.getCpf());
+            a.setDataNascimento(funcionario.getDataNascimento());
+        });
         return new ResponseEntity<>(funcionario, HttpStatus.OK);
     }
 }
