@@ -1,0 +1,34 @@
+package io.github.pedromeerholz.controlefrota.controller;
+
+import io.github.pedromeerholz.controlefrota.model.Funcionario;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+@RequestMapping("/funcionario")
+public class ControllerFuncionario {
+    private List<Funcionario> listaFuncionario = new ArrayList<Funcionario>();
+
+    @PostMapping("/adicionar")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String cadastrarFuncionario(@RequestBody Funcionario funcionario) {
+        System.out.println(funcionario.getNome());
+        this.listaFuncionario.add(funcionario);
+        return "Funcionário criado com sucesso";
+    }
+
+    @GetMapping("/consultar")
+    public ResponseEntity<List<Funcionario>> consultarFuncionarios() {
+        return new ResponseEntity<>(this.listaFuncionario, HttpStatus.OK);
+    }
+
+    @GetMapping("/consultar/{codigo}")
+    public ResponseEntity<Funcionario> consultarFuncionario(@PathVariable("codigo") long codigo) {
+        Funcionario funcionario = this.listaFuncionario.stream().filter(a -> a.getCodigo() == codigo).findFirst().get();
+        return new ResponseEntity<>(funcionario, HttpStatus.OK);
+    }
+}
