@@ -40,4 +40,14 @@ public class ControllerFuncionario {
         });
         return new ResponseEntity<>(funcionario, HttpStatus.OK);
     }
+
+    @PatchMapping("/alterar-nome/{codigo}")
+    public String alterarAtributoFuncionario(@PathVariable("codigo") long codigo,
+                                                                  @RequestBody Funcionario funcionario) {
+        this.listaFuncionario.stream().filter(a -> a.getCodigo() == codigo).forEach(a -> {
+            a.setNome(funcionario.getNome());
+        });
+
+        return "Nome atualizado com sucesso!";
+    }
 }
