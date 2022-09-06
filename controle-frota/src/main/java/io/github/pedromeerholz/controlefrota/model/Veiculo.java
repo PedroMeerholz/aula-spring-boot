@@ -1,6 +1,7 @@
 package io.github.pedromeerholz.controlefrota.model;
 
 public class Veiculo {
+    private long codigo;
     private String placa;
     private String modelo;
     private String ano;
@@ -11,6 +12,14 @@ public class Veiculo {
         setModelo(modelo);
         setAno(ano);
         setStatus(status);
+    }
+
+    public long getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(long codigo) {
+        this.codigo = codigo;
     }
 
     public String getPlaca() {
