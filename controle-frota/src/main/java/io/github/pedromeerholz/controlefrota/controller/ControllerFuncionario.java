@@ -50,4 +50,13 @@ public class ControllerFuncionario {
 
         return "Nome atualizado com sucesso!";
     }
+
+    @DeleteMapping("/deletar/{codigo}")
+    public String deletarFuncionario(@PathVariable("codigo") long codigo) {
+        this.listaFuncionario.stream().filter(a -> a.getCodigo() == codigo).forEach(a -> {
+            this.listaFuncionario.remove(a);
+        });
+
+        return "Funcionário deletado com sucesso!";
+    }
 }
