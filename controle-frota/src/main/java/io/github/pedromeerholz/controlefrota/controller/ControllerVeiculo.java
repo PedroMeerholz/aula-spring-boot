@@ -41,4 +41,12 @@ public class ControllerVeiculo {
         return "Veiculo alterado com sucesso!";
     }
 
+    @PatchMapping("/alterar-placa/{codigo}")
+    public String alterarPlacaVeiculo(@PathVariable("codigo") long codigo, @RequestBody Veiculo veiculo) {
+        this.listaVeiculos.stream().filter(v -> v.getCodigo() == codigo).forEach(v -> {
+            v.setPlaca(veiculo.getPlaca());
+        });
+
+        return "Placa alterada com sucesso!";
+    }
 }
