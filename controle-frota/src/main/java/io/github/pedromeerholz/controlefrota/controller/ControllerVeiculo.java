@@ -25,9 +25,20 @@ public class ControllerVeiculo {
     }
 
     @GetMapping("/consultar/{codigo}")
-    public ResponseEntity<Veiculo> consultarVeiculo(@PathVariable long codigo) {
+    public ResponseEntity<Veiculo> consultarVeiculo(@PathVariable("codigo") long codigo) {
         Veiculo veiculo = this.listaVeiculos.stream().filter(v -> v.getCodigo() == codigo).findFirst().get();
         return new ResponseEntity<>(veiculo, HttpStatus.OK);
+    }
+
+    @PutMapping("/alterar/{codigo}")
+    public String alterarVeiculo(@PathVariable("codigo") long codigo, @RequestBody Veiculo veiculo) {
+        this.listaVeiculos.stream().filter(v -> v.getCodigo() == codigo).forEach(v -> {
+            v.setPlaca(veiculo.getPlaca());
+            v.setModelo(veiculo.getModelo());
+            v.setAno(veiculo.getAno());
+            v.setStatus(veiculo.getStatus());
+        });
+        return "Veiculo alterado com sucesso!";
     }
 
 }
