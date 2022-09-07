@@ -10,7 +10,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/veiculo")
 public class ControllerVeiculo {
-    private List<Veiculo> listaVeiculos = new ArrayList<Veiculo>();
+    private List<Veiculo> listaVeiculos = new ArrayList<>();
 
     @PostMapping("/adicionar")
     @ResponseStatus(HttpStatus.CREATED)
@@ -48,5 +48,12 @@ public class ControllerVeiculo {
         });
 
         return "Placa alterada com sucesso!";
+    }
+
+    @DeleteMapping("/deletar/{codigo}")
+    public String removerVeiculo(@PathVariable("codigo") long codigo) {
+        Veiculo veiculo = this.listaVeiculos.stream().filter(v -> v.getCodigo() == codigo).findFirst().get();
+        this.listaVeiculos.remove(veiculo);
+        return "Veículo removido com sucesso!";
     }
 }
